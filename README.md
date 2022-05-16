@@ -8,6 +8,8 @@ Write your own Operating System Series on youtube
 - https://github.com/cfenollosa/os-tutorial
 - https://wiki.osdev.org/
 
+## Notes
+
 Discord server incoming
 
 Any help is welcome!
