@@ -5,8 +5,9 @@ A Unix-like HobbyOS writen in C
 Write your own Operating System Series on youtube
 
 ## Credits
-- https://github.com/cfenollosa/os-tutorial
+- https://github.com/cfenollosa/os-tutorial/
 - https://wiki.osdev.org/
+- https://wyoos.org/
 
 ## Notes
 
