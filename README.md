@@ -2,7 +2,7 @@
 A Unix-like HobbyOS writen in C
 
 ## Inspiration
-Write your own Operating System Series on youtube
+Write your own Operating System Series on Youtube
 
 ## Credits
 - https://github.com/cfenollosa/os-tutorial/
@@ -10,8 +10,6 @@ Write your own Operating System Series on youtube
 - https://wyoos.org/
 
 ## Notes
-
-Discord server incoming
 
 Any help is welcome!
 Thanks

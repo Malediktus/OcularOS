@@ -1,10 +1,10 @@
 {
+    "makefile.extensionOutputFolder": "./.vscode",
+    "C_Cpp.errorSquiggles": "Enabled",
     "files.associations": {
-        "array": "c",
-        "string": "c",
-        "string_view": "c",
-        "msdospart.h": "c",
-        "gdt.h": "c",
-        "types.h": "c"
+        "kernel.h": "c",
+        "types.h": "c",
+        "screen.h": "c",
+        "string.h": "c"
     }
 }

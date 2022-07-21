@@ -1,0 +1,24 @@
+git:
+    - create new repo
+
+bootloader:
+    - long mode supprt
+    - second stage
+    - filesystem support
+    - reading kernel as a file
+    - setting graphics mode
+    - muliboot options
+    - graphical os selecting interface
+    - giving font array from file to kernel
+
+kernel:
+    - determine heap size by total memory size
+    - page/swap file
+
+shell:
+
+libc:
+
+desktop_env:
+
+general:
