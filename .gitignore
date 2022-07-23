@@ -1,7 +1,4 @@
-bin
-build
 .vscode
 **.o
 **.bin
 **.elf
-experimental

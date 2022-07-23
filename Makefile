@@ -10,7 +10,11 @@ FILES = ./build/kernel.asm.o \
 		./build/memory/kheap.o \
 		./build/memory/paging.o \
 		./build/memory/paging.asm.o \
-		./build/drivers/disk.o
+		./build/drivers/disk.o \
+		./build/drivers/diskstream.o \
+		./build/filesystem/pathparser.o \
+		./build/filesystem/file.o \
+		./build/filesystem/fat/fat16.o
 
 
 INCLUDES = -I./src
@@ -20,7 +24,16 @@ all: ./bin/boot.bin ./bin/kernel.bin
 	rm -rf ./bin/os.bin
 	dd if=./bin/boot.bin >> ./bin/os.bin
 	dd if=./bin/kernel.bin >> ./bin/os.bin
-	dd if=/dev/zero bs=512 count=100 >> ./bin/os.bin
+	dd if=/dev/zero bs=1048576 count=16 >> ./bin/os.bin
+	# !!! Make sure the right usb stick is plugged in
+	# !!! It will be overriten
+	sudo sh ./copy_data.sh 0
+	diskutil mount /dev/disk2
+	# Copying files to /Volumes/OCULAR\ BOOT
+	cp ./hello.txt /Volumes/OCULAR\ BOOT/
+	# End of copying files
+	diskutil umount /dev/disk2
+	sudo sh ./copy_data.sh 1
 
 ./bin/kernel.bin: $(FILES)
 	i686-elf-ld -g -relocatable $(FILES) -o ./build/kernelfull.o
@@ -36,6 +49,9 @@ all: ./bin/boot.bin ./bin/kernel.bin
 	i686-elf-gcc $(INCLUDES) $(FLAGS) -std=gnu99 -c $^ -o $@
 
 run: all
+	qemu-system-i386 -hda bin/os.bin
+
+run-build:
 	qemu-system-i386 -hda bin/os.bin
 
 clean:

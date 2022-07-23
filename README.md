@@ -6,6 +6,7 @@ Write your own Operating System Series on Youtube
 
 ## Credits
 - https://github.com/cfenollosa/os-tutorial/
+- https://github.com/nibblebits/PeachOS
 - https://wiki.osdev.org/
 - https://wyoos.org/
 

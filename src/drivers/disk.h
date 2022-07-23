@@ -3,6 +3,7 @@
 
 #include <hardware/port.h>
 #include <lib/memory.h>
+#include <filesystem/file.h>
 #include <config.h>
 #include <status.h>
 
@@ -14,6 +15,11 @@ struct disk
 {
     OCULAROS_DISK_TYPE type;
     int sector_size;
+    int id;
+    struct filesystem* filesystem;
+
+    // Private data of the filesystem
+    void* fs_private;
 };
 
 void disk_search_and_init();

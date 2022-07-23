@@ -12,7 +12,11 @@
 #include <memory/kheap.h>
 #include <memory/paging.h>
 #include <drivers/disk.h>
+#include <drivers/diskstream.h>
+#include <filesystem/pathparser.h>
+#include <filesystem/file.h>
 
 void kernel_main();
+void panic(const char* msg);
 
 #endif

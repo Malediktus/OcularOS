@@ -9,6 +9,9 @@ void kernel_main()
     // Initializing the heap
     kheap_init();
 
+    // Initializing the filesystems
+    fs_init();
+
     // Search and initialize the disks
     disk_search_and_init();
 
@@ -26,4 +29,13 @@ void kernel_main()
 
     // Enable inerrupts
     enable_interrupts();
+
+    while(1);
+}
+
+void panic(const char* msg)
+{
+    print("A ciritcal error occured... The system cannot continue!\n");
+    print(msg);
+    while (1);
 }

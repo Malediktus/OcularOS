@@ -1,3 +1,6 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
@@ -13,3 +16,11 @@ typedef uint8_t bool;
 
 #define false 0
 #define true 1
+
+#define NULL ((void *)0)
+
+#define ERROR(value) (void*)(value)
+#define ERROR_I(value) (int)(value)
+#define ISERROR(value) ((int)value < 0)
+
+#endif
