@@ -1,11 +1,5 @@
-git:
-    - create new repo
-
 bootloader:
     - long mode supprt
-    - second stage
-    - filesystem support
-    - reading kernel as a file
     - setting graphics mode
     - muliboot options
     - graphical os selecting interface
@@ -18,11 +12,3 @@ kernel:
 makefile:
     - auto detect object files
     - make copy_data.sh script inline
-
-shell:
-
-libc:
-
-desktop_env:
-
-general:

@@ -1,0 +1,4 @@
+0x00100000 (1 MG): Kernel code
+0x01000000 : Loader and Kernel heap
+0x01200000 (2 MG) : Loader code
+0x00000500 (~30 KB) : VESA info struct

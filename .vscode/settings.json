@@ -1,10 +1,6 @@
 {
-    "makefile.extensionOutputFolder": "./.vscode",
-    "C_Cpp.errorSquiggles": "Enabled",
     "files.associations": {
-        "kernel.h": "c",
-        "types.h": "c",
-        "screen.h": "c",
-        "string.h": "c"
+        "*.js": "javascriptreact",
+        "types.h": "c"
     }
 }
