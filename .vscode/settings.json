@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.js": "javascriptreact",
-        "types.h": "c"
+        "types.h": "c",
+        "kheap.h": "c"
     }
 }

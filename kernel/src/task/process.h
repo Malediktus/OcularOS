@@ -1,8 +1,17 @@
 #ifndef PROCESS_H
 #define PROCESS_H
-#include "types.h"
-#include "task.h"
-#include "config.h"
+
+#include <task/task.h>
+#include <lib/memory.h>
+#include <lib/string.h>
+#include <filesystem/file.h>
+#include <memory/kheap.h>
+#include <memory/paging.h>
+#include <status.h>
+#include <kernel.h>
+#include <types.h>
+#include <config.h>
+
 struct process
 {
     // The process id

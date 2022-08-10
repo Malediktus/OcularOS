@@ -1,6 +1,25 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#include <hardware/idt.h>
+#include <hardware/gdt.h>
+#include <memory/kheap.h>
+#include <memory/paging.h>
+#include <lib/memory.h>
+#include <lib/string.h>
+#include <syscall/isr80h.h>
+#include <task/task.h>
+#include <task/process.h>
+#include <task/tss.h>
+#include <filesystem/file.h>
+#include <filesystem/pparser.h>
+#include <driver/disk/disk.h>
+#include <driver/keyboard/keyboard.h>
+#include <driver/disk/streamer.h>
+#include <config.h>
+#include <types.h>
+#include <status.h>
+
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 20
 

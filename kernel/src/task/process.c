@@ -1,13 +1,4 @@
-#include "process.h"
-#include "config.h"
-#include "status.h"
-#include "task/task.h"
-#include "memory/memory.h"
-#include "string/string.h"
-#include "fs/file.h"
-#include "memory/heap/kheap.h"
-#include "memory/paging/paging.h"
-#include "kernel.h"
+#include <task/process.h>
 
 // The current process that is running
 struct process* current_process = 0;

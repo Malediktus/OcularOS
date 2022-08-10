@@ -1,12 +1,4 @@
-#include "task.h"
-#include "kernel.h"
-#include "status.h"
-#include "process.h"
-#include "memory/heap/kheap.h"
-#include "memory/memory.h"
-#include "string/string.h"
-#include "memory/paging/paging.h"
-#include "idt/idt.h"
+#include <task/task.h>
 
 // The current task that is running
 struct task *current_task = 0;

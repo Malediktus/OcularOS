@@ -1,8 +1,15 @@
 #ifndef TASK_H
 #define TASK_H
 
-#include "config.h"
-#include "memory/paging/paging.h"
+#include <task/process.h>
+#include <memory/kheap.h>
+#include <memory/paging.h>
+#include <lib/memory.h>
+#include <lib/string.h>
+#include <hardware/idt.h>
+#include <config.h>
+#include <kernel.h>
+#include <status.h>
 
 struct interrupt_frame;
 struct registers

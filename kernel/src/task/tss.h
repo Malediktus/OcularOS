@@ -1,7 +1,8 @@
 #ifndef TASKSWITCHSEGMENT_H
 #define TASKSWITCHSEGMENT_H
 
-#include "types.h"
+#include <types.h>
+
 struct tss
 {
     uint32_t link;

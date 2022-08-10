@@ -1,23 +1,4 @@
-#include "kernel.h"
-
-#include "types.h"
-#include "idt/idt.h"
-#include "memory/heap/kheap.h"
-#include "memory/paging/paging.h"
-#include "memory/memory.h"
-#include "string/string.h"
-#include "isr80h/isr80h.h"
-#include "task/task.h"
-#include "task/process.h"
-#include "fs/file.h"
-#include "disk/disk.h"
-#include "fs/pparser.h"
-#include "disk/streamer.h"
-#include "task/tss.h"
-#include "gdt/gdt.h"
-#include "config.h"
-#include "status.h"
-#include "keyboard/keyboard.h"
+#include <kernel.h>
 
 uint16_t* video_mem = 0;
 uint16_t terminal_row = 0;

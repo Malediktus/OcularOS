@@ -1,31 +1,58 @@
+OLD_FILES = ./build/kernel.asm.o \
+			./build/kernel.o \
+			./build/isr80h/isr80h.o \
+			./build/isr80h/misc.o \
+			./build/isr80h/io.o \
+			./build/disk/disk.o \
+			./build/disk/streamer.o \
+			./build/task/process.o \
+			./build/task/task.o \
+			./build/task/task.asm.o \
+			./build/task/tss.asm.o \
+			./build/fs/pparser.o \
+			./build/fs/file.o \
+			./build/fs/fat/fat16.o \
+			./build/string/string.o \
+			./build/idt/idt.asm.o \
+			./build/idt/idt.o \
+			./build/memory/memory.o \
+			./build/io/io.asm.o \
+			./build/gdt/gdt.o \
+			./build/gdt/gdt.asm.o \
+			./build/memory/heap/heap.o \
+			./build/memory/heap/kheap.o \
+			./build/memory/paging/paging.o \
+			./build/memory/paging/paging.asm.o \
+			./build/keyboard/keyboard.o \
+			./build/keyboard/classic.o
+
 FILES = ./build/kernel.asm.o \
 		./build/kernel.o \
-		./build/isr80h/isr80h.o \
-		./build/isr80h/misc.o \
-		./build/isr80h/io.o \
-		./build/disk/disk.o \
-		./build/disk/streamer.o \
+		./build/syscall/isr80h.o \
+		./build/syscall/misc.o \
+		./build/syscall/io.o \
+		./build/driver/disk/disk.o \
+		./build/driver/disk/streamer.o \
 		./build/task/process.o \
 		./build/task/task.o \
 		./build/task/task.asm.o \
 		./build/task/tss.asm.o \
-		./build/fs/pparser.o \
-		./build/fs/file.o \
-		./build/fs/fat/fat16.o \
-		./build/string/string.o \
-		./build/idt/idt.asm.o \
-		./build/idt/idt.o \
-		./build/memory/memory.o \
-		./build/io/io.asm.o \
-		./build/gdt/gdt.o \
-		./build/gdt/gdt.asm.o \
-		./build/memory/heap/heap.o \
-		./build/memory/heap/kheap.o \
-		./build/memory/paging/paging.o \
-		./build/memory/paging/paging.asm.o \
-		./build/keyboard/keyboard.o \
-		./build/keyboard/classic.o
-
+		./build/filesystem/pparser.o \
+		./build/filesystem/file.o \
+		./build/filesystem/fat/fat16.o \
+		./build/lib/string.o \
+		./build/lib/memory.o \
+		./build/hardware/idt.asm.o \
+		./build/hardware/idt.o \
+		./build/hardware/port.asm.o \
+		./build/hardware/gdt.o \
+		./build/hardware/gdt.asm.o \
+		./build/memory/heap.o \
+		./build/memory/kheap.o \
+		./build/memory/paging.o \
+		./build/memory/paging.asm.o \
+		./build/driver/keyboard/keyboard.o \
+		./build/driver/keyboard/classic.o
 
 INCLUDES = -I./src
 FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
