@@ -9,5 +9,7 @@
 struct interrupt_frame;
 void* isr80h_command0_sum(struct interrupt_frame* frame);
 void* isr80h_command6_process_load(struct interrupt_frame* frame);
+void* isr80h_command7_invoke_system_command(struct interrupt_frame* frame);
+void* isr80h_command8_get_program_arguments(struct interrupt_frame* frame);
 
 #endif

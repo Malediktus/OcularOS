@@ -6,13 +6,9 @@
 
 int main(int argc, char** argv)
 {
-    print("Hello from C, finally back again with libc\n");
+    for (int i = 1; i < argc; i++)
+        printf("%s\n", argv[i]);
 
-    char* ptr = malloc(20);
-    strcpy(ptr, "hello world");
-    print(ptr);
-    free(ptr);
-    
     while(1);
     return 0;
 }

@@ -1,4 +1,4 @@
-FILES=./build/start.asm.o ./build/ocularos.asm.o ./build/stdlib.o ./build/stdio.o ./build/string.o ./build/memory.o ./build/OcularOS.o
+FILES=./build/start.asm.o ./build/ocularos.asm.o ./build/stdlib.o ./build/stdio.o ./build/string.o ./build/memory.o ./build/OcularOS.o ./build/start.o
 INCLUDES=-I./include
 FLAGS = -g -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 

@@ -3,6 +3,7 @@
         "*.js": "javascriptreact",
         "types.h": "c",
         "kheap.h": "c",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "ocularos.h": "c"
     }
 }

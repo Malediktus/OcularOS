@@ -5,6 +5,7 @@
 
 void* malloc(size_t size);
 void free(void* ptr);
+int system(const char *command);
 
 char* itoa(int i);
 

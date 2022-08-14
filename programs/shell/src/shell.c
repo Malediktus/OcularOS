@@ -1,9 +1,13 @@
+#include "shell.h"
+#include "argument.h"
 #include <OcularOS.h>
 #include <stdio.h>
-#include "shell.h"
+#include <stdlib.h>
 
 int main(int argc, char** argv)
 {
+    // TODO: free arguments
+    // TODO: allow arguments to use quotes
     print("OcularOS v1.0.0\n");
     while (1)
     {
@@ -12,7 +16,7 @@ int main(int argc, char** argv)
         ocularos_readline(buf, sizeof(buf), true);
         print("\n");
 
-        ocularos_process_load(buf);
+        system(buf);
     }
 
     return 0;

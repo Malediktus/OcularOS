@@ -5,9 +5,9 @@
 struct command_argument* parse_command(const char* command, int max)
 {
     struct command_argument* root_command = 0;
-    char scommand[1024];
+    char scommand[1025];
     if (max >= (int)sizeof(scommand))
-        return max;
+        return 0;
     
     strncpy(scommand, command, sizeof(scommand));
     char* token = strtok(scommand, " ");
@@ -28,5 +28,13 @@ struct command_argument* parse_command(const char* command, int max)
         struct command_argument* new_command = malloc(sizeof(struct command_argument));
         if (!new_command)
             break;
+        
+        strncpy(new_command->argument, token, sizeof(new_command->argument));
+        new_command->next = 0x00;
+        current->next = new_command;
+        current = new_command;
+        token = strtok(NULL, " ");
     }
+
+    return root_command;
 }
