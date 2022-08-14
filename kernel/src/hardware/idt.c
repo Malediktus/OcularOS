@@ -32,11 +32,6 @@ void interrupt_handler(int interrupt, struct interrupt_frame* frame)
     outb(0x20, 0x20);
 }
 
-void idt_zero()
-{
-    print("Divide by zero error\n");
-}
-
 void idt_set(int interrupt_no, void* address)
 {
     struct idt_desc* desc = &idt_descriptors[interrupt_no];
@@ -45,6 +40,13 @@ void idt_set(int interrupt_no, void* address)
     desc->zero = 0x00;
     desc->type_attr = 0xEE;
     desc->offset_2 = (uint32_t) address >> 16;
+}
+
+void idt_handle_exception()
+{
+    process_terminate(task_current()->process);
+    print("Segmentation fault\n"); // TODO: Start crash handler program instead of just printing
+    task_next();
 }
 
 void idt_init()
@@ -58,9 +60,12 @@ void idt_init()
         idt_set(i, interrupt_pointer_table[i]);
     }
 
-    idt_set(0, idt_zero);
     idt_set(0x80, isr80h_wrapper);
 
+    for (int i = 0; i < 0x20; i++)
+    {
+        idt_register_interrupt_callback(i, idt_handle_exception);
+    }
 
     // Load the interrupt descriptor table
     idt_load(&idtr_descriptor);

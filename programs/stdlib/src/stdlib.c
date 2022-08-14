@@ -89,3 +89,10 @@ int system(const char *command)
 
     return ocularos_system(root_command_argument);
 }
+
+void ocularos_exit();
+void exit(int status)
+{
+    if (status); // Nothing to do with error codes yet
+    ocularos_exit();
+}

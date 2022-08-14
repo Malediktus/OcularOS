@@ -10,6 +10,7 @@ global ocularos_process_get_arguments:function
 global ocularos_malloc:function
 global ocularos_free:function
 global ocularos_system:function
+global ocularos_exit:function
 
 ; void print(const char* message)
 print:
@@ -70,6 +71,17 @@ ocularos_system:
     push dword[ebp+8] ; Variable arguments
     int 0x80
     add esp, 4
+
+    pop ebp
+    ret
+
+; void ocularos_exit()
+ocularos_exit:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 9 ; Command exit
+    int 0x80
 
     pop ebp
     ret
