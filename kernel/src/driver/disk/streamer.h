@@ -4,6 +4,7 @@
 #include <driver/disk/disk.h>
 #include <memory/kheap.h>
 #include <config.h>
+#include <types.h>
 
 struct disk_stream
 {

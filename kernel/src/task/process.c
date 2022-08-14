@@ -31,6 +31,77 @@ int process_switch(struct process* process)
     return 0;
 }
 
+static int process_find_free_allocation_index(struct process* process)
+{
+    int res = -ENOMEM;
+    for (int i = 0; i < OCULAROS_MAX_PROGRAM_ALLOCATIONS; i++)
+        if (process->allocations[i].ptr == 0)
+        {
+            res = i;
+            break;
+        }
+
+    return res;
+}
+
+void* process_malloc(struct process* process, size_t size)
+{
+    void* ptr = kzalloc(size);
+    if (!ptr)
+        goto out_err;
+
+    int index = process_find_free_allocation_index(process);
+    if (index < 0)
+        goto out_err;
+
+    int res = paging_map_to(process->task->page_directory, ptr, ptr, paging_align_address(ptr+size), PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+    if (res < 0)
+        goto out_err;
+
+    process->allocations[index].ptr = ptr;
+    process->allocations[index].size = size;
+    return ptr;
+
+out_err:
+    if (ptr)
+        kfree(ptr);
+
+    return 0;
+}
+
+static void process_allocation_unjoin(struct process* process, void* ptr)
+{
+    for (int i = 0; i < OCULAROS_MAX_PROGRAM_ALLOCATIONS; i++)
+        if (process->allocations[i].ptr == ptr)
+        {
+            process->allocations[i].ptr = 0x00;
+            process->allocations[i].size = 0;
+        }
+}
+
+static struct process_allocation* process_get_allocation_by_addr(struct process* process, void* addr)
+{
+    for (int i = 0; i < OCULAROS_MAX_PROGRAM_ALLOCATIONS; i++)
+        if (process->allocations[i].ptr == addr)
+            return &process->allocations[i];
+    return 0;
+}
+
+void process_free(struct process* process, void* ptr)
+{
+    // Unlink the pages
+    struct process_allocation* allocation = process_get_allocation_by_addr(process, ptr);
+    if (!allocation) // TODO: Kill the process
+        return;
+
+    int res = paging_map_to(process->task->page_directory, allocation->ptr, allocation->ptr, paging_align_address(allocation->ptr+allocation->size), 0x00);
+    if (res < 0)
+        return;
+
+    process_allocation_unjoin(process, ptr);
+    kfree(ptr);
+}
+
 static int process_load_binary(const char* filename, struct process* process)
 {
     int res = 0;
@@ -61,6 +132,7 @@ static int process_load_binary(const char* filename, struct process* process)
         goto out;
     }
 
+    process->filetype = PROCESS_FILETYPE_BINARY;
     process->ptr = program_data_ptr;
     process->size = stat.filesize;
 
@@ -68,10 +140,31 @@ out:
     fclose(fd);
     return res;
 }
+
+static int process_load_elf(const char* filename, struct process* process)
+{
+    int res = 0;
+    struct elf_file* elf_file = 0;
+    res = elf_load(filename, &elf_file);
+    if (ISERR(res))
+    {
+        goto out;
+    }
+
+    process->filetype = PROCESS_FILETYPE_ELF;
+    process->elf_file = elf_file;
+out:
+    return res;
+}
 static int process_load_data(const char* filename, struct process* process)
 {
     int res = 0;
-    res = process_load_binary(filename, process);
+    res = process_load_elf(filename, process);
+    if (res == -EINFORMAT)
+    {
+        res = process_load_binary(filename, process);
+    }
+
     return res;
 }
 
@@ -81,15 +174,54 @@ int process_map_binary(struct process* process)
     paging_map_to(process->task->page_directory, (void*) OCULAROS_PROGRAM_VIRTUAL_ADDRESS, process->ptr, paging_align_address(process->ptr + process->size), PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL | PAGING_IS_WRITEABLE);
     return res;
 }
+
+static int process_map_elf(struct process* process)
+{
+    int res = 0;
+
+    struct elf_file* elf_file = process->elf_file;
+    struct elf_header* header = elf_header(elf_file);
+    struct elf32_phdr* phdrs = elf_pheader(header);
+    for (int i = 0; i < header->e_phnum; i++)
+    {
+        
+        struct elf32_phdr* phdr = &phdrs[i];
+        void* phdr_phys_address = elf_phdr_phys_address(elf_file, phdr);
+        int flags = PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL;
+        if (phdr->p_flags & PF_W)
+            flags |= PAGING_IS_WRITEABLE;
+
+        res = paging_map_to(process->task->page_directory, paging_align_to_lower_page((void*)phdr->p_vaddr), paging_align_to_lower_page(phdr_phys_address), paging_align_address(phdr_phys_address+phdr->p_memsz), flags);
+        if (ISERR(res))
+            break;
+    }
+    return res;
+}
+
 int process_map_memory(struct process* process)
 {
     int res = 0;
-    res = process_map_binary(process);
+
+    switch(process->filetype)
+    {
+        case PROCESS_FILETYPE_ELF:
+            res = process_map_elf(process);
+        break;
+
+        case PROCESS_FILETYPE_BINARY:
+            res = process_map_binary(process);
+        break;
+
+        default:
+            panic("process_map_memory: Invalid filetype\n");
+    }
+
     if (res < 0)
     {
         goto out;
     }
 
+    // Finally map the stack
     paging_map_to(process->task->page_directory, (void*)OCULAROS_PROGRAM_VIRTUAL_STACK_ADDRESS_END, process->stack, paging_align_address(process->stack+OCULAROS_USER_PROGRAM_STACK_SIZE), PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL | PAGING_IS_WRITEABLE);
 out:
     return res;

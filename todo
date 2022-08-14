@@ -8,6 +8,8 @@ bootloader:
 kernel:
     - determine heap size by total memory size
     - page/swap file
+    - add support for dynamic linking
+    - adding write functionallity to fat filesystem
 
 makefile:
     - auto detect object files

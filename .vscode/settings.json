@@ -2,6 +2,7 @@
     "files.associations": {
         "*.js": "javascriptreact",
         "types.h": "c",
-        "kheap.h": "c"
+        "kheap.h": "c",
+        "stdbool.h": "c"
     }
 }

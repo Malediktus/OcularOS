@@ -43,6 +43,19 @@ step2:
     mov sp, 0x7c00
     sti ; Enables Interrupts
 
+    mov ax, 0x4F02
+    mov bx, 0x4118 ; 414a
+    int 0x10
+    cmp ax, 0x004F	; test for error
+    jne error
+
+    mov ax, 0x4F01
+    mov cx, 0x118 ; 14a
+    mov di, 0x00000500
+    int 0x10
+    cmp ax, 0x004F	; test for error
+    jne error
+
 .load_protected:
     cli
     lgdt[gdt_descriptor]
@@ -148,6 +161,10 @@ ata_lba_read:
     loop .next_sector
     ; End of reading sectors into memory
     ret
+
+[bits 16]
+error:
+    jmp $
 
 times 510-($ - $$) db 0
 dw 0xAA55

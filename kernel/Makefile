@@ -1,45 +1,21 @@
-OLD_FILES = ./build/kernel.asm.o \
-			./build/kernel.o \
-			./build/isr80h/isr80h.o \
-			./build/isr80h/misc.o \
-			./build/isr80h/io.o \
-			./build/disk/disk.o \
-			./build/disk/streamer.o \
-			./build/task/process.o \
-			./build/task/task.o \
-			./build/task/task.asm.o \
-			./build/task/tss.asm.o \
-			./build/fs/pparser.o \
-			./build/fs/file.o \
-			./build/fs/fat/fat16.o \
-			./build/string/string.o \
-			./build/idt/idt.asm.o \
-			./build/idt/idt.o \
-			./build/memory/memory.o \
-			./build/io/io.asm.o \
-			./build/gdt/gdt.o \
-			./build/gdt/gdt.asm.o \
-			./build/memory/heap/heap.o \
-			./build/memory/heap/kheap.o \
-			./build/memory/paging/paging.o \
-			./build/memory/paging/paging.asm.o \
-			./build/keyboard/keyboard.o \
-			./build/keyboard/classic.o
-
 FILES = ./build/kernel.asm.o \
 		./build/kernel.o \
 		./build/syscall/isr80h.o \
 		./build/syscall/misc.o \
 		./build/syscall/io.o \
+		./build/syscall/heap.o \
 		./build/driver/disk/disk.o \
 		./build/driver/disk/streamer.o \
 		./build/task/process.o \
 		./build/task/task.o \
 		./build/task/task.asm.o \
 		./build/task/tss.asm.o \
+		./build/task/loader/elf.o \
+		./build/task/loader/elfloader.o \
 		./build/filesystem/pparser.o \
 		./build/filesystem/file.o \
 		./build/filesystem/fat/fat16.o \
+		./build/lib/screen.o \
 		./build/lib/string.o \
 		./build/lib/memory.o \
 		./build/hardware/idt.asm.o \
@@ -81,9 +57,13 @@ run-build:
 	qemu-system-i386 -hda bin/os.bin
 
 user_programs:
+	cd ../programs/stdlib && $(MAKE) all
+	cd ../programs/shell && $(MAKE) all
 	cd ../programs/blank && $(MAKE) all
 
 user_programs_clean:
+	cd ../programs/stdlib && $(MAKE) clean
+	cd ../programs/shell && $(MAKE) clean
 	cd ../programs/blank && $(MAKE) clean
 
 bootloader:

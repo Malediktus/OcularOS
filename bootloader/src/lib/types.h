@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <stdbool.h>
+
 typedef char int8_t;
 typedef short int16_t;
 typedef int int32_t;
@@ -12,10 +14,6 @@ typedef unsigned int uint32_t;
 typedef unsigned long long int uint64_t;
 
 typedef uint32_t size_t;
-typedef uint8_t bool;
-
-#define false 0
-#define true 1
 
 #define NULL ((void *)0)
 

@@ -1,88 +1,19 @@
 #include <kernel.h>
 
-uint16_t* video_mem = 0;
-uint16_t terminal_row = 0;
-uint16_t terminal_col = 0;
-
-uint16_t terminal_make_char(char c, char colour)
-{
-    return (colour << 8) | c;
-}
-
-void terminal_putchar(int x, int y, char c, char colour)
-{
-    video_mem[(y * VGA_WIDTH) + x] = terminal_make_char(c, colour);
-}
-
-void terminal_backspace()
-{
-    if (terminal_row == 0 && terminal_col == 0)
-    {
-        return;
-    }
-
-    if (terminal_col == 0)
-    {
-        terminal_row -= 1;
-        terminal_col = VGA_WIDTH;
-    }
-
-    terminal_col -=1;
-    terminal_writechar(' ', 15);
-    terminal_col -=1;
-}
-
-void terminal_writechar(char c, char colour)
-{
-    if (c == '\n')
-    {
-        terminal_row += 1;
-        terminal_col = 0;
-        return;
-    }
-
-    if (c == 0x08)
-    {
-        terminal_backspace();
-        return;
-    }
-
-    terminal_putchar(terminal_col, terminal_row, c, colour);
-    terminal_col += 1;
-    if (terminal_col >= VGA_WIDTH)
-    {
-        terminal_col = 0;
-        terminal_row += 1;
-    }
-}
-void terminal_initialize()
-{
-    video_mem = (uint16_t*)(0xB8000);
-    terminal_row = 0;
-    terminal_col = 0;
-    for (int y = 0; y < VGA_HEIGHT; y++)
-    {
-        for (int x = 0; x < VGA_WIDTH; x++)
-        {
-            terminal_putchar(x, y, ' ', 0);
-        }
-    }   
-}
-
-void print(const char* str)
-{
-    size_t len = strlen(str);
-    for (int i = 0; i < len; i++)
-    {
-        terminal_writechar(str[i], 15);
-    }
-}
-
-
 static struct paging_4gb_chunk* kernel_chunk = 0;
+
+int createRGB(int r, int g, int b)
+{   
+  int c = r;
+  c = (c << 8) | g;
+  c = (c << 8) | b;
+  return c;
+}
 
 void panic(const char* msg)
 {
+    fillscreen(0xFF0000);
+    print("Kernel panic... The system cannot continue!\n");
     print(msg);
     while(1) {}
 }
@@ -106,9 +37,6 @@ struct gdt_structured gdt_structured[OCULAROS_TOTAL_GDT_SEGMENTS] = {
 
 void kernel_main()
 {
-    terminal_initialize();
-    print("Starting the kernel...\n");
-
     memset(gdt_real, 0x00, sizeof(gdt_real));
     gdt_structured_to_gdt(gdt_real, gdt_structured, OCULAROS_TOTAL_GDT_SEGMENTS);
 
@@ -123,6 +51,11 @@ void kernel_main()
 
     // Search and initialize the disks
     disk_search_and_init();
+
+    // Initializing graphics
+    terminal_initialize();
+
+    print("Starting the kernel...\n");
 
     // Initialize the interrupt descriptor table
     idt_init();
@@ -152,13 +85,15 @@ void kernel_main()
     print("Initialization finished!\n");
 
     struct process* process = 0;
-    int res = process_load_switch("0:/blank.bin", &process);
+    int res = process_load_switch("0:/shell.elf", &process);
     if (res != OCULAROS_ALL_OK)
     {
-        panic("Failed to load blank.bin\n");
+        panic("Failed to load shell.elf\n");
     }
 
     task_run_first_ever_task();
+
+    print("Landed at end of kernel\n");
 
     while(1) {}
 }

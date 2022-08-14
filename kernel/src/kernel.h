@@ -7,6 +7,7 @@
 #include <memory/paging.h>
 #include <lib/memory.h>
 #include <lib/string.h>
+#include <lib/screen.h>
 #include <syscall/isr80h.h>
 #include <task/task.h>
 #include <task/process.h>
@@ -20,19 +21,11 @@
 #include <types.h>
 #include <status.h>
 
-#define VGA_WIDTH 80
-#define VGA_HEIGHT 20
-
-#define OCULAROS_MAX_PATH 108
-
 void kernel_main();
-void print(const char* str);
-void terminal_writechar(char c, char colour);
 
 void panic(const char* msg);
 void kernel_page();
 void kernel_registers();
-
 
 #define ERROR(value) (void*)(value)
 #define ERROR_I(value) (int)(value)

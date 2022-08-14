@@ -18,6 +18,6 @@ void* isr80h_command2_getkey(struct interrupt_frame* frame)
 void* isr80h_command3_putchar(struct interrupt_frame* frame)
 {
     char c = (char)(int)task_get_stack_item(task_current(), 0);
-    terminal_writechar(c, 15);
+    terminal_writechar(c, 0xFFFFFF);
     return 0;
 }

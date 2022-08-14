@@ -1,6 +1,9 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 #define NULL ((void *)0)
-#define FALSE 0
-#define TRUE 1
+
+#include <stdbool.h>
 
 typedef char                int8_t;
 typedef short               int16_t;
@@ -14,4 +17,17 @@ typedef unsigned long int   uint64_t;
 
 typedef uint32_t            size_t;
 
-typedef uint8_t             bool;
+struct psf1_header
+{
+    uint8_t magic[2];
+    uint8_t mode;
+    uint8_t charsize;
+};
+
+struct psf1_font
+{
+    struct psf1_header* header;
+    void* buffer;
+};
+
+#endif

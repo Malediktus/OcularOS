@@ -193,13 +193,15 @@ int task_init(struct task *task, struct process *process)
 {
     memset(task, 0, sizeof(struct task));
     // Map the entire 4GB address space to its self
-    task->page_directory = paging_new_4gb(PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+    task->page_directory = paging_new_4gb(PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL); // TODO: Remove the access from all
     if (!task->page_directory)
     {
         return -EIO;
     }
 
     task->registers.ip = OCULAROS_PROGRAM_VIRTUAL_ADDRESS;
+    if (process->filetype == PROCESS_FILETYPE_ELF)
+        task->registers.ip = elf_header(process->elf_file)->e_entry;
     task->registers.ss = USER_DATA_SEGMENT;
     task->registers.cs = USER_CODE_SEGMENT;
     task->registers.esp = OCULAROS_PROGRAM_VIRTUAL_STACK_ADDRESS_START;

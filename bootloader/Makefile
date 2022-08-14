@@ -26,7 +26,9 @@ all: ./bin/boot.bin ./bin/loader.bin
 	diskutil mount /dev/disk2
 	# Copying files to /Volumes/OCULAR\ BOOT
 	cp ../kernel/bin/kernel.bin /Volumes/OCULAR\ BOOT/
-	cp ../programs/blank/blank.bin /Volumes/OCULAR\ BOOT/
+	cp ../kfont.psf /Volumes/OCULAR\ BOOT/
+	cp ../programs/blank/blank.elf /Volumes/OCULAR\ BOOT/
+	cp ../programs/shell/shell.elf /Volumes/OCULAR\ BOOT/
 	# End of copying files
 	diskutil umount /dev/disk2
 	sudo sh ./copy_data.sh 1
