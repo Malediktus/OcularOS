@@ -12,7 +12,7 @@ int createRGB(int r, int g, int b)
 
 void panic(const char* msg)
 {
-    fillscreen(0xFF0000);
+    //fillscreen(0xFF0000);
     print("Kernel panic... The system cannot continue!\n");
     print(msg);
     while(1) {}
@@ -92,9 +92,11 @@ void kernel_main()
     }
 
     struct command_argument argument;
-    strcpy(argument.argument, "Testing");
-    argument.next = 0x00;
+    strcpy(argument.argument, "Testing!");
+    argument.next = 0x00; 
+
     process_inject_arguments(process, &argument);
+
     task_run_first_ever_task();
 
     print("Landed at end of kernel\n");

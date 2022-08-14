@@ -253,6 +253,7 @@ out:
 static int process_load_binary(const char* filename, struct process* process)
 {
     int res = 0;
+    void* program_data_ptr = 0x00;
     int fd = fopen(filename, "r");
     if (!fd)
     {
@@ -267,7 +268,7 @@ static int process_load_binary(const char* filename, struct process* process)
         goto out;
     }
 
-    void* program_data_ptr = kzalloc(stat.filesize);
+    program_data_ptr = kzalloc(stat.filesize);
     if (!program_data_ptr)
     {
         res = -ENOMEM;
@@ -285,6 +286,8 @@ static int process_load_binary(const char* filename, struct process* process)
     process->size = stat.filesize;
 
 out:
+    if (res < 0 && program_data_ptr)
+        kfree(program_data_ptr);
     fclose(fd);
     return res;
 }
