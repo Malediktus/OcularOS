@@ -1,6 +1,5 @@
 bootloader:
-    - long mode supprt
-    - setting graphics mode
+    - config file
     - muliboot options
     - graphical os selecting interface
     - giving font array from file to kernel
@@ -9,8 +8,29 @@ kernel:
     - determine heap size by total memory size
     - page/swap file
     - add support for dynamic linking
-    - adding write functionallity to fat filesystem
+    - start shell if no processes are running
 
 makefile:
     - auto detect object files
-    - make copy_data.sh script inline
+    - use hdiutil create (need fat32)
+
+filesystem:
+    - edit/write
+    - rename
+    - remove
+    - create
+
+    - fat32 implementation (https://www.cs.fsu.edu/~cop4610t/assignments/project3/spec/fatspec.pdf)
+    - dos partition table
+
+    - own filesystem (?)
+
+shell:
+    - interpreted shell
+    - cd command
+    - setting env variables (alredy working in the kernel)
+    - pipes
+    - >> and << operator
+    - background tasks
+    - multiple tty's
+    - exit command

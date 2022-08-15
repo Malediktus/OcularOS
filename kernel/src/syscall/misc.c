@@ -16,8 +16,8 @@ void* isr80h_command6_process_load(struct interrupt_frame* frame)
         goto out;
 
     char path[OCULAROS_MAX_PATH];
-    strcpy(path, "0:/");
-    strcpy(path+3, filename);
+    strcpy(path, "0:");
+    strcpy(path+2, filename);
 
     struct process* process = 0;
     res = process_load_switch(path, &process);
@@ -43,9 +43,33 @@ void* isr80h_command7_invoke_system_command(struct interrupt_frame* frame)
     const char* program_name = root_command_argument->argument;
 
     char path[OCULAROS_MAX_PATH];
-    // TODO: implement path/environment variables
-    strcpy(path, "0:/");
-    strncpy(path+3, program_name, sizeof(path));
+    memset(path, 0, OCULAROS_MAX_PATH);
+    char path_var_copy[OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE];
+    memset(path_var_copy, 0, OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE);
+    strncpy(path_var_copy, get_environment_variable("path"), OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE);
+    char* token = strtok(path_var_copy, ";");
+    if (*program_name != '/')
+    {
+    while (token != 0)
+    {
+        strcpy(path, "0:");
+        strncpy(path+2, token, strlen(token)+1); //TODO: check if '/'' is at end of path
+        strncpy(path+2+strlen(token), program_name, sizeof(path)-(2+strlen(token)));
+        int fd = fopen(path, "r");
+        if (fd)
+        {
+            fclose(fd);
+            break;
+        }
+        token = strtok(NULL, ";");
+    }
+    token = strtok(NULL, ";");
+    }
+    else
+    {
+        strcpy(path, "0:");
+        strncpy(path+2, program_name, sizeof(path)-2);
+    }
 
     struct process* process = 0;
     int res = process_load_switch(path, &process);

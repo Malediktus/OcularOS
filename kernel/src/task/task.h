@@ -29,7 +29,6 @@ struct registers
     uint32_t ss;
 };
 
-
 struct process;
 struct task
 {

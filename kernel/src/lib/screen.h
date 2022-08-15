@@ -44,6 +44,12 @@ struct vbe_mode_info_structure {
 	uint8_t reserved1[206];
 } __attribute__ ((packed));
 
+extern uint16_t pitch;
+extern uint8_t bpp;
+extern uint32_t framebuffer;
+extern uint16_t width;
+extern uint16_t height;
+
 void putpixel(int x, int y, int color);
 void terminal_initialize();
 void terminal_writechar(char c, int colour);

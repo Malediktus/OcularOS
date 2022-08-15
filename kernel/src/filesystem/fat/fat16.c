@@ -427,6 +427,7 @@ static int fat16_get_cluster_for_offset(struct disk *disk, int starting_cluster,
 out:
     return res;
 }
+
 static int fat16_read_internal_from_stream(struct disk *disk, struct disk_stream *stream, int cluster, int offset, int total, void *out)
 {
     int res = 0;

@@ -1,6 +1,46 @@
 #include <kernel.h>
 
 static struct paging_4gb_chunk* kernel_chunk = 0;
+struct environment_variable environment_variables[OCULAROS_MAX_ENVIRONMENT_VARIABLES];
+
+int set_environment_variable(char* key, char* content)
+{
+    for (int i = 0; i < (sizeof(environment_variables) / sizeof(struct environment_variable)); i++)
+    {
+        if (strncmp(key, environment_variables[i].name, OCULAROS_MAX_ENVIRONMENT_VARIABLE_NAME) == 0)
+        {
+            strcpy(environment_variables[i].content, content); // TODO: Potential buffer overflow
+            return 0;
+        }
+    }
+
+    for (int i = 0; i < (sizeof(environment_variables) / sizeof(struct environment_variable)); i++)
+    {
+        if (environment_variables[i].name == 0)
+        {
+            environment_variables[i].name = kzalloc(OCULAROS_MAX_ENVIRONMENT_VARIABLE_NAME);
+            environment_variables[i].content = kzalloc(OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE);
+            strcpy(environment_variables[i].name, key); // TODO: Potential buffer overflow
+            strcpy(environment_variables[i].content, content); // TODO: Potential buffer overflow
+            return 0;
+        }
+    }
+
+    return -ENOMEM;
+}
+
+char* get_environment_variable(char* key)
+{
+    for (int i = 0; i < (sizeof(environment_variables) / sizeof(struct environment_variable)); i++)
+    {
+        if (strncmp(key, environment_variables[i].name, OCULAROS_MAX_ENVIRONMENT_VARIABLE_NAME) == 0)
+        {
+            return environment_variables[i].content;
+        }
+    }
+
+    return "";
+}
 
 int createRGB(int r, int g, int b)
 {   
@@ -57,6 +97,10 @@ void kernel_main()
 
     print("Starting the kernel...\n");
 
+    // Setting environment variables
+    memset(environment_variables, 0, sizeof(environment_variables));
+    set_environment_variable("path", "/;/bin/;/usr/bin/");
+
     // Initialize the interrupt descriptor table
     idt_init();
 
@@ -85,21 +129,15 @@ void kernel_main()
     print("Initialization finished!\n");
 
     struct process* process = 0;
-    int res = process_load_switch("0:/shell.elf", &process);
+    int res = process_load_switch("0:/bin/shell.elf", &process);
     if (res != OCULAROS_ALL_OK)
     {
-        panic("Failed to load shell.elf\n");
+        panic("Failed to load bin/shell.elf\n");
     }
-
-    struct command_argument argument;
-    strcpy(argument.argument, "Testing!");
-    argument.next = 0x00; 
-
-    process_inject_arguments(process, &argument);
 
     task_run_first_ever_task();
 
     print("Landed at end of kernel\n");
 
-    while(1) {}
+    while(1);
 }

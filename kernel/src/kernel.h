@@ -21,6 +21,15 @@
 #include <types.h>
 #include <status.h>
 
+struct environment_variable
+{
+    char* name;
+    char* content;
+};
+
+int set_environment_variable(char* key, char* content);
+char* get_environment_variable(char* key);
+
 void kernel_main();
 
 void panic(const char* msg);
