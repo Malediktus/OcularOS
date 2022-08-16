@@ -9,6 +9,7 @@
         "isr80h.h": "c",
         "memory.h": "c",
         "stdio.h": "c",
-        "shell.h": "c"
+        "shell.h": "c",
+        "string.h": "c"
     }
 }

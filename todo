@@ -11,6 +11,7 @@ kernel:
     - start shell if no processes are running
     - compability with glibc
     - inter process comunication
+    - fix bug when no tasks exists
 
 makefile:
     - auto detect object files

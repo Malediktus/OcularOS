@@ -17,7 +17,9 @@ int main(int argc, char** argv)
         ocularos_readline(buf, sizeof(buf), true);
         print("\n");
 
-        system(buf);
+        int code = system(buf);
+        if (code < 0)
+            printf("Command '%s' not found\n", buf);
     }
 
     return 0;
