@@ -9,13 +9,14 @@ kernel:
     - page/swap file
     - add support for dynamic linking
     - start shell if no processes are running
+    - compability with glibc
 
 makefile:
     - auto detect object files
     - use hdiutil create (need fat32)
 
 filesystem:
-    - edit/write
+    - edit/write with long files
     - rename
     - remove
     - create

@@ -30,7 +30,7 @@ int diskstreamer_read(struct disk_stream* stream, void* out, int total)
 
     if (overflow)
     {
-        total_to_read  -= (offset+total_to_read) - OCULAROS_SECTOR_SIZE;
+        total_to_read -= (offset+total_to_read) - OCULAROS_SECTOR_SIZE;
     }
 
     int res = disk_read_block(stream->disk, sector, 1, buf);
@@ -49,6 +49,42 @@ int diskstreamer_read(struct disk_stream* stream, void* out, int total)
     if (overflow)
     {
         res = diskstreamer_read(stream, out, total-total_to_read);
+    }
+out:
+    return res;
+}
+
+int diskstreamer_write(struct disk_stream* stream, void* in, int total)
+{
+    int sector = stream->pos / OCULAROS_SECTOR_SIZE;
+    int offset = stream->pos % OCULAROS_SECTOR_SIZE;
+    int total_to_write = total;
+    bool overflow = (offset+total_to_write) >= OCULAROS_SECTOR_SIZE;
+    char buf[OCULAROS_SECTOR_SIZE];
+
+    if (overflow)
+    {
+        total_to_write -= (offset+total_to_write) - OCULAROS_SECTOR_SIZE;
+    }
+
+    int res = disk_read_block(stream->disk, sector, 1, buf);
+    if (res < 0)
+    {
+        goto out;
+    }
+
+    for (int i = 0; i < total_to_write; i++)
+    {
+        buf[offset+i] = *(char*)in++;
+    }
+
+    disk_write_block(stream->disk, sector, 1, buf);
+
+    // Adjust the stream
+    stream->pos += total_to_write;
+    if (overflow)
+    {
+        res = diskstreamer_write(stream, in, total-total_to_write);
     }
 out:
     return res;

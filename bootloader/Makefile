@@ -27,9 +27,14 @@ all: ./bin/boot.bin ./bin/loader.bin
 	# Copying files to /Volumes/OCULAR\ BOOT
 	cp ../kernel/bin/kernel.bin /Volumes/OCULAR\ BOOT/
 	cp ../kfont.psf /Volumes/OCULAR\ BOOT/
+	cp ../debug.txt /Volumes/OCULAR\ BOOT/
 	mkdir /Volumes/OCULAR\ BOOT/bin
 	mkdir /Volumes/OCULAR\ BOOT/usr
 	mkdir /Volumes/OCULAR\ BOOT/usr/bin
+	mkdir /Volumes/OCULAR\ BOOT/usr/lib
+	mkdir /Volumes/OCULAR\ BOOT/usr/include
+	cp ../programs/stdlib/stdlib.elf /Volumes/OCULAR\ BOOT/usr/lib
+	cp ../programs/stdlib/include/**.h /Volumes/OCULAR\ BOOT/usr/include
 	cp ../programs/blank/blank.elf /Volumes/OCULAR\ BOOT/usr/bin
 	cp ../programs/shell/shell.elf /Volumes/OCULAR\ BOOT/bin
 	# End of copying files

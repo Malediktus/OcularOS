@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "config.h"
 #include <OcularOS.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,7 +13,7 @@ int main(int argc, char** argv)
     while (1)
     {
         print("> ");
-        char buf[1024];
+        char buf[SHELL_MAX_INPUT_SIZE];
         ocularos_readline(buf, sizeof(buf), true);
         print("\n");
 

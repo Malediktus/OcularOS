@@ -165,7 +165,14 @@ static void process_unlink(struct process* process)
         return;
     }
 
-    panic("process_unlink: No processes to switch to\n");
+    struct process* new_process = 0;
+    int res = process_load_switch("0:/bin/shell.elf", &new_process);
+    if (res != OCULAROS_ALL_OK)
+    {
+        panic("Failed to load bin/shell.elf\n");
+    }
+    process_switch_to_any();
+    //panic("process_unlink: No processes to switch to\n");
 }
 
 int process_terminate(struct process* process)
