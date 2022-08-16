@@ -1,8 +1,20 @@
 # OcularOS
-A Unix-like HobbyOS writen in C
+A HobbyOS writen in C
+<h1>Its not unix or linux</h1>
 
 ## Inspiration
 Write your own Operating System Series on Youtube
+
+## Includes
+- Own multitasking kernel with support for elf files
+- Custom bootloader with 2 stages, also written in c with support for fat16 filesystem
+- Custom shell
+
+## Screenshots
+<img src="screenshots/Bildschirmfoto 2022-08-16 um 12.41.56.png"/>
+<img src="screenshots/Bildschirmfoto 2022-08-16 um 12.42.24.png"/>
+<img src="screenshots/Bildschirmfoto 2022-08-16 um 12.41.34.png"/>
+<img src="screenshots/Bildschirmfoto 2022-08-16 um 12.40.35.png"/>
 
 ## Credits
 - https://github.com/cfenollosa/os-tutorial/

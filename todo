@@ -10,6 +10,7 @@ kernel:
     - add support for dynamic linking
     - start shell if no processes are running
     - compability with glibc
+    - inter process comunication
 
 makefile:
     - auto detect object files
