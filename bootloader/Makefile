@@ -36,6 +36,7 @@ all: ./bin/boot.bin ./bin/loader.bin
 	cp ../programs/stdlib/stdlib.elf /Volumes/OCULAR\ BOOT/usr/lib
 	cp ../programs/stdlib/include/**.h /Volumes/OCULAR\ BOOT/usr/include
 	cp ../programs/blank/blank.elf /Volumes/OCULAR\ BOOT/usr/bin
+	cp ../programs/calculator/calc /Volumes/OCULAR\ BOOT/usr/bin
 	cp ../programs/shell/shell.elf /Volumes/OCULAR\ BOOT/bin
 	# End of copying files
 	diskutil umount /dev/disk2

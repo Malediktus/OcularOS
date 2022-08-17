@@ -60,11 +60,13 @@ user_programs:
 	cd ../programs/stdlib && $(MAKE) all
 	cd ../programs/shell && $(MAKE) all
 	cd ../programs/blank && $(MAKE) all
+	cd ../programs/calculator && $(MAKE) all
 
 user_programs_clean:
 	cd ../programs/stdlib && $(MAKE) clean
 	cd ../programs/shell && $(MAKE) clean
 	cd ../programs/blank && $(MAKE) clean
+	cd ../programs/calculator && $(MAKE) clean
 
 bootloader:
 	cd ../bootloader && $(MAKE) all
