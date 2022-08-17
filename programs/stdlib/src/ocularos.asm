@@ -11,6 +11,7 @@ global ocularos_malloc:function
 global ocularos_free:function
 global ocularos_system:function
 global ocularos_exit:function
+global ocularos_free_all:function
 
 ; void print(const char* message)
 print:
@@ -81,6 +82,17 @@ ocularos_exit:
     mov ebp, esp
 
     mov eax, 9 ; Command exit
+    int 0x80
+
+    pop ebp
+    ret
+
+; void ocularos_free_all()
+ocularos_free_all:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 10 ; Command free all
     int 0x80
 
     pop ebp

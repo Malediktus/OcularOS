@@ -2,9 +2,6 @@
 A HobbyOS writen in C
 <h1>Its not unix or linux</h1>
 
-## Inspiration
-Write your own Operating System Series on Youtube
-
 ## Includes
 - Own multitasking kernel with support for elf files
 - Custom bootloader with 2 stages, also written in c with support for fat16 filesystem
@@ -21,6 +18,7 @@ Write your own Operating System Series on Youtube
 - https://github.com/nibblebits/PeachOS
 - https://wiki.osdev.org/
 - https://wyoos.org/
+- https://www.youtube.com/watch?v=Eythq9848Fg&t=312s/
 
 ## Notes
 

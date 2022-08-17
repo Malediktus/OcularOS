@@ -1,6 +1,5 @@
 {
     "files.associations": {
-        "*.js": "javascriptreact",
         "types.h": "c",
         "kheap.h": "c",
         "stdbool.h": "c",
@@ -10,6 +9,8 @@
         "memory.h": "c",
         "stdio.h": "c",
         "shell.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "stddef.h": "c",
+        "parser.h": "c"
     }
 }

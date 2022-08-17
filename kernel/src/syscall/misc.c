@@ -104,3 +104,9 @@ void* isr80h_command9_exit(struct interrupt_frame* frame)
 
     return 0;
 }// TODO: Implement exit codes
+
+void* isr80h_command10_free_all(struct interrupt_frame* frame)
+{
+    int res = process_terminate_allocations(task_current()->process);
+    return (void*)res;
+}

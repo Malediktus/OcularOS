@@ -22,7 +22,6 @@ enum
     SEEK_END
 };
 
-
 typedef unsigned int FILE_MODE;
 enum
 { 
@@ -44,11 +43,8 @@ typedef void*(*FS_OPEN_FUNCTION)(struct disk* disk, struct path_part* path, FILE
 typedef int (*FS_READ_FUNCTION)(struct disk* disk, void* private, uint32_t size, uint32_t nmemb, char* out);
 typedef int (*FS_WRITE_FUNCTION)(struct disk* disk, void* private, uint32_t size, uint32_t nmemb, char* in);
 typedef int (*FS_RESOLVE_FUNCTION)(struct disk* disk);
-
 typedef int (*FS_CLOSE_FUNCTION)(void* private);
-
 typedef int (*FS_SEEK_FUNCTION)(void* private, uint32_t offset, FILE_SEEK_MODE seek_mode);
-
 
 struct file_stat
 {

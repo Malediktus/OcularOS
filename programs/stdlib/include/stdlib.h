@@ -8,5 +8,6 @@ void free(void* ptr);
 int system(const char *command);
 
 char* itoa(int i);
+char* ftoa(double f, int precision);
 
 #endif
