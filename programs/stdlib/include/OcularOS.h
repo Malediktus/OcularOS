@@ -15,5 +15,6 @@ void ocularos_readline(char* out, int max, bool output_while_typing);
 void ocularos_process_load(const char* filename);
 int ocularos_system(struct command_argument* arguments);
 void ocularos_free_all();
+void ocularos_get_environ_var(char* name, char* content);
 
 #endif

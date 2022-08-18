@@ -12,6 +12,7 @@ global ocularos_free:function
 global ocularos_system:function
 global ocularos_exit:function
 global ocularos_free_all:function
+global ocularos_get_environ_var:function
 
 ; void print(const char* message)
 print:
@@ -94,6 +95,20 @@ ocularos_free_all:
 
     mov eax, 10 ; Command free all
     int 0x80
+
+    pop ebp
+    ret
+
+; void ocularos_get_environ_var(char* name, char* content)
+ocularos_get_environ_var:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 11 ; Command get environ var
+    push dword[ebp+8] ; Variable content
+    push dword[ebp+16] ; Variable name
+    int 0x80
+    add esp, 8
 
     pop ebp
     ret

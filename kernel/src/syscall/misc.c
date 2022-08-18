@@ -110,3 +110,26 @@ void* isr80h_command10_free_all(struct interrupt_frame* frame)
     int res = process_terminate_allocations(task_current()->process);
     return (void*)res;
 }
+
+void* isr80h_command11_get_environ_var(struct interrupt_frame* frame)
+{
+    char* content = task_virtual_address_to_physical(task_current(), task_get_stack_item(task_current(), 0));
+    void* user_space_name_buf = task_get_stack_item(task_current(), 1);
+    char name[OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE];
+    copy_string_from_task(task_current(), user_space_name_buf, name, sizeof(name));
+    strcpy(content, get_environment_variable(name));
+    return 0;
+}
+
+void* isr80h_command12_set_environ_var(struct interrupt_frame* frame)
+{
+    void* user_space_content_buf = task_get_stack_item(task_current(), 0);
+    void* user_space_name_buf = task_get_stack_item(task_current(), 1);
+    char content[OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE];
+    copy_string_from_task(task_current(), user_space_content_buf, content, sizeof(content));
+    char name[OCULAROS_MAX_ENVIRONMENT_VARIABLE_SIZE];
+    copy_string_from_task(task_current(), user_space_name_buf, name, sizeof(name));
+
+    set_environment_variable(name, content);
+    return 0;
+}

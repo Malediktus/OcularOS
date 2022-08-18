@@ -13,4 +13,6 @@ void isr80h_register_commands()
     isr80h_register_command(SYSTEM_COMMAND8_GET_PROGRAM_ARGUMENTS, isr80h_command8_get_program_arguments);
     isr80h_register_command(SYSTEM_COMMAND9_EXIT, isr80h_command9_exit);
     isr80h_register_command(SYSTEM_COMMAND10_FREE_ALL, isr80h_command10_free_all);
+    isr80h_register_command(SYSTEM_COMMAND11_GET_ENVIRON_VAR, isr80h_command11_get_environ_var);
+    isr80h_register_command(SYSTEM_COMMAND12_SET_ENVIRON_VAR, isr80h_command12_set_environ_var);
 }
