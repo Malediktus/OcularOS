@@ -1,5 +1,6 @@
 #include "OcularOS.h"
 #include <stdbool.h>
+#include <stdio.h>
 
 int ocularos_getkey();
 void ocularos_putchar(char c);
@@ -26,18 +27,24 @@ void ocularos_readline(char* out, int max, bool output_while_typing)
         if (key == 13)
             break;
 
-        if (output_while_typing)
-            ocularos_putchar(key);
-
         // Backspace
         if (key == 0x08 && i >= 1)
         {
             out[i-1] = 0x00;
             i -= 2;
+            if (output_while_typing)
+                ocularos_putchar(key);
+            continue;
+        }
+        else if (key == 0x08)
+        {
+            i--;
             continue;
         }
 
         out[i] = key;
+        if (output_while_typing)
+            ocularos_putchar(key);
     }
 
     //Add the null terminator

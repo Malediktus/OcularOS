@@ -26,7 +26,6 @@ void terminal_putchar(int xOff, int yOff, char c, int colour)
         }
         font_ptr++;
     }
-    //video_mem[(y * VGA_WIDTH) + x] = terminal_make_char(c, colour);
 }
 
 void terminal_backspace()
