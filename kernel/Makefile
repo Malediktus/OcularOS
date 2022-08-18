@@ -61,12 +61,14 @@ user_programs:
 	cd ../programs/shell && $(MAKE) all
 	cd ../programs/blank && $(MAKE) all
 	cd ../programs/calculator && $(MAKE) all
+	cd ../programs/neofetch && $(MAKE) all
 
 user_programs_clean:
 	cd ../programs/stdlib && $(MAKE) clean
 	cd ../programs/shell && $(MAKE) clean
 	cd ../programs/blank && $(MAKE) clean
 	cd ../programs/calculator && $(MAKE) clean
+	cd ../programs/neofetch && $(MAKE) clean
 
 bootloader:
 	cd ../bootloader && $(MAKE) all

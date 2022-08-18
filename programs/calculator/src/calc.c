@@ -52,15 +52,15 @@ int main(int argc, char** argv)
         ocularos_readline(buf, sizeof(buf), true);
         print("\n");
 
-        run("<stdin>", buf);
-
-        ocularos_free_all();
-
         char buf_lower[4];
         for (int i = 0; i < 4; i++)
             buf_lower[i] = tolower(buf[i]);
 
         if (strncmp(buf_lower, "exit", 4) == 0) exit(0);
+
+        run("<stdin>", buf);
+
+        ocularos_free_all();
     }
 
     return 0;

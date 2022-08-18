@@ -43,7 +43,13 @@ int main(int argc, char** argv)
         print("> ");
         char buf[SHELL_MAX_INPUT_SIZE];
         ocularos_readline(buf, sizeof(buf), true);
-        print("\n");        
+        print("\n");
+
+        char buf_lower[4];
+        for (int i = 0; i < 4; i++)
+            buf_lower[i] = tolower(buf[i]);
+
+        if (strncmp(buf_lower, "exit", 4) == 0) exit(0);
 
         int code = system(buf);
         if (code < 0)
