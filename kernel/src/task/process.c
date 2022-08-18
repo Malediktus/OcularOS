@@ -151,8 +151,12 @@ void process_switch_to_any()
     for (int i = 0; i < OCULAROS_MAX_PROCESSES; i++)
     {
         if (processes[i])
+        {
             process_switch(processes[i]);
+            return;
+        }
     }
+    panic("process_switch_to_any: No processes to switch to\n");
 }
 
 static void process_unlink(struct process* process)
@@ -164,15 +168,6 @@ static void process_unlink(struct process* process)
         process_switch_to_any();
         return;
     }
-
-    struct process* new_process = 0;
-    int res = process_load_switch("0:/bin/shell.elf", &new_process);
-    if (res != OCULAROS_ALL_OK)
-    {
-        panic("Failed to load bin/shell.elf\n");
-    }
-    process_switch_to_any();
-    //panic("process_unlink: No processes to switch to\n");
 }
 
 int process_terminate(struct process* process)

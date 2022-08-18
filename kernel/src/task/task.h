@@ -6,6 +6,7 @@
 #include <memory/paging.h>
 #include <lib/memory.h>
 #include <lib/string.h>
+#include <lib/screen.h>
 #include <hardware/idt.h>
 #include <config.h>
 #include <kernel.h>

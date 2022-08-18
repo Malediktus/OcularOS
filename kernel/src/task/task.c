@@ -56,6 +56,21 @@ struct task *task_get_next()
 {
     if (!current_task->next)
     {
+        if (task_head == 0)
+        {
+            fillscreen(0x4351D2);
+            print("Starting the kernel...\n");
+            print("Initialization finished!\n");
+
+            struct process* process = 0;
+            int res = process_load_switch("0:/bin/shell.elf", &process);
+            if (res != OCULAROS_ALL_OK)
+            {
+                panic("Failed to load bin/shell.elf\n");
+            }
+
+            return process->task;
+        }
         return task_head;
     }
 
@@ -100,14 +115,7 @@ void task_next()
     struct task* next_task = task_get_next();
     if (!next_task)
     {
-        struct process* process = 0;
-        int res = process_load_switch("0:/bin/shell.elf", &process);
-        if (res != OCULAROS_ALL_OK)
-        {
-            panic("Failed to load bin/shell.elf\n");
-        }
-        next_task = task_get_next();
-        //panic("task_next: No more tasks!\n");
+        panic("task_next: No more tasks!\n");
     }
 
     task_switch(next_task);
