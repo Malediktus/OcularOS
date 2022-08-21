@@ -5,7 +5,7 @@ A HobbyOS writen in C
 ## Includes
 - Own multitasking kernel with support for elf files
 - Custom bootloader with 2 stages, also written in c with support for fat16 filesystem
-- Custom shell
+- Custom interpreted shell
 
 ## Screenshots
 <img src="screenshots/Bildschirmfoto 2022-08-16 um 12.41.56.png"/>
