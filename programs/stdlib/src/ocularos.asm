@@ -19,6 +19,8 @@ global fread:function
 global fwrite:function
 global fstat:function
 global fclose:function
+global ocularos_start_ipc:function
+global ocularos_pop_ipc:function
 
 ; void print(const char* message)
 print:
@@ -207,9 +209,30 @@ fclose:
     pop ebp
     ret
 
-;;;;;;;;;;;;;;;;;;;;;
-;;;;; PRIVATE API ;;;
-;;;;;;;;;;;;;;;;;;;;;
+; void* ocularos_start_ipc(char* process_path, int size)
+ocularos_start_ipc:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 20 ; Command start ipc
+    push dword[ebp+12] ; Variable process_path
+    push dword[ebp+8] ; Variable size
+    int 0x80
+    add esp, 8
+
+    pop ebp
+    ret
+
+; void* ocularos_pop_ipc()
+ocularos_pop_ipc:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 21 ; Command pop ipc
+    int 0x80
+
+    pop ebp
+    ret
 
 ; void ocularos_process_get_arguments(struct process_arguments* arguments)
 ocularos_process_get_arguments:

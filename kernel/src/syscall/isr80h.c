@@ -22,4 +22,6 @@ void isr80h_register_commands()
     isr80h_register_command(SYSTEM_COMMAND17_FWRITE, isr80h_command17_fwrite);
     isr80h_register_command(SYSTEM_COMMAND18_FSTAT, isr80h_command18_fstat);
     isr80h_register_command(SYSTEM_COMMAND19_FCLOSE, isr80h_command19_fclose);
+    isr80h_register_command(SYSTEM_COMMAND20_START_IPC, isr80h_command20_start_ipc);
+    isr80h_register_command(SYSTEM_COMMAND21_POP_IPC, isr80h_command21_pop_ipc);
 }

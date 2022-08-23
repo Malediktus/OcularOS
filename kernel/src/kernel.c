@@ -128,11 +128,11 @@ void kernel_main()
 
     print("Initialization finished!\n");
 
-    struct process* process = 0;
-    int res = process_load_switch("0:/bin/shell.elf", &process);
+    struct process* process2 = 0;
+    int res = process_load_switch("0:/usr/bin/blank.elf", &process2);
     if (res != OCULAROS_ALL_OK)
     {
-        panic("Failed to load bin/shell.elf\n");
+        panic("Failed to load /usr/bin/blank.elf\n");
     }
 
     task_run_first_ever_task();

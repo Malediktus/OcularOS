@@ -3,7 +3,7 @@
 // The current process that is running
 struct process* current_process = 0;
 
-static struct process* processes[OCULAROS_MAX_PROCESSES] = {};
+struct process* processes[OCULAROS_MAX_PROCESSES] = {};
 
 static void process_init(struct process* process)
 {
@@ -67,6 +67,19 @@ out_err:
         kfree(ptr);
 
     return 0;
+}
+
+void* process_start_ipc(struct process* A, struct process* B, int size)
+{
+    void* ptr = process_malloc(A, size);
+    if (!ptr)
+        goto out;
+    int res = paging_map_to(B->task->page_directory, ptr, ptr, paging_align_address(ptr+size), PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL);
+    if (res < 0)
+        return 0;
+
+out:
+    return ptr;
 }
 
 static void process_allocation_unjoin(struct process* process, void* ptr)

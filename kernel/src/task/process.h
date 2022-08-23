@@ -17,6 +17,8 @@
 #define PROCESS_FILETYPE_BINARY 1
 typedef uint8_t PROCESS_FILE_TYPE;
 
+extern struct process* processes[OCULAROS_MAX_PROCESSES];
+
 struct command_argument
 {
     char argument[512];
@@ -69,10 +71,13 @@ struct process
         int head;
     } keyboard;
 
+    void* ipc_buffer[OCULAROS_MAX_IPC_BUFFER_SIZE_PER_PROGRAM];
+
     struct process_arguments arguments;
 };
 
 void* process_malloc(struct process* process, size_t size);
+void* process_start_ipc(struct process* A, struct process* B, int size);
 void process_free(struct process* process, void* ptr);
 int process_terminate(struct process* process);
 int process_terminate_allocations(struct process* process);

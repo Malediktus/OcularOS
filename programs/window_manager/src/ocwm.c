@@ -11,7 +11,6 @@ int rgb_to_hex(int r, int b, int g)
 
 int main(int argc, char** argv)
 {
-{
     /*FILE wallpaper = fopen("0:/img.ppm", "r");
     if (!wallpaper)
     {
@@ -72,7 +71,10 @@ int main(int argc, char** argv)
     }
     
     fclose(wallpaper);*/
-}
 
+    void* ptr = ocularos_start_ipc("0:/usr/bin/blank.elf", 512);
+    if (!ptr)
+        print("Error");
+    while (1);
     return 0;
 }

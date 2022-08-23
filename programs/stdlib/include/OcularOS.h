@@ -16,5 +16,7 @@ void ocularos_process_load(const char* filename);
 int ocularos_system(struct command_argument* arguments);
 void ocularos_free_all();
 void ocularos_get_environ_var(char* name, char* content);
+void* ocularos_start_ipc(char* process_path, int size);
+void* ocularos_pop_ipc();
 
 #endif

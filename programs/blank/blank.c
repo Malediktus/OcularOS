@@ -13,6 +13,20 @@ int main(int argc, char** argv)
         int* ptr = (int*)0x01;
         *ptr = 0xBAD;
     }
+
+    int i = 0;
+    while(1)
+    {
+        if (ocularos_pop_ipc() != 0)
+        {
+            print("ok");
+        }
+        if (i != 2)
+        {
+            i++;
+            system("ocwm.elf");
+        }
+    }
         
     return 0;
 }
