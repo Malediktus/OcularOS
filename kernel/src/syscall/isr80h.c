@@ -15,4 +15,11 @@ void isr80h_register_commands()
     isr80h_register_command(SYSTEM_COMMAND10_FREE_ALL, isr80h_command10_free_all);
     isr80h_register_command(SYSTEM_COMMAND11_GET_ENVIRON_VAR, isr80h_command11_get_environ_var);
     isr80h_register_command(SYSTEM_COMMAND12_SET_ENVIRON_VAR, isr80h_command12_set_environ_var);
+    isr80h_register_command(SYSTEM_COMMAND13_PUT_PIXEL, isr80h_command13_putpixel);
+    isr80h_register_command(SYSTEM_COMMAND14_FOPEN, isr80h_command14_fopen);
+    isr80h_register_command(SYSTEM_COMMAND15_FSEEK, isr80h_command15_fseek);
+    isr80h_register_command(SYSTEM_COMMAND16_FREAD, isr80h_command16_fread);
+    isr80h_register_command(SYSTEM_COMMAND17_FWRITE, isr80h_command17_fwrite);
+    isr80h_register_command(SYSTEM_COMMAND18_FSTAT, isr80h_command18_fstat);
+    isr80h_register_command(SYSTEM_COMMAND19_FCLOSE, isr80h_command19_fclose);
 }

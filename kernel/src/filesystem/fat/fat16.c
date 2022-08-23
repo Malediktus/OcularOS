@@ -243,6 +243,7 @@ int fat16_get_root_directory(struct disk *disk, struct fat_private *fat_private,
 out:
     return res;
 }
+
 int fat16_resolve(struct disk *disk)
 {
     int res = 0;

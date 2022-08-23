@@ -13,6 +13,12 @@ global ocularos_system:function
 global ocularos_exit:function
 global ocularos_free_all:function
 global ocularos_get_environ_var:function
+global fopen:function
+global fseek:function
+global fread:function
+global fwrite:function
+global fstat:function
+global fclose:function
 
 ; void print(const char* message)
 print:
@@ -106,9 +112,97 @@ ocularos_get_environ_var:
 
     mov eax, 11 ; Command get environ var
     push dword[ebp+8] ; Variable content
-    push dword[ebp+16] ; Variable name
+    push dword[ebp+12] ; Variable name
     int 0x80
     add esp, 8
+
+    pop ebp
+    ret
+
+; int fopen(char* filename, char* mode_str)
+fopen:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 14 ; Command fopen
+    push dword[ebp+12] ; Variable filename
+    push dword[ebp+8] ; Variable mode_str
+    int 0x80
+    add esp, 8
+
+    pop ebp
+    ret
+
+; int fseek(int fd, int offset, unsigned int whence)
+fseek:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 15 ; Command fseek
+    push dword[ebp+16] ; Variable whence
+    push dword[ebp+12] ; Variable offset
+    push dword[ebp+8] ; Variable fd
+    int 0x80
+    add esp, 12
+
+    pop ebp
+    ret
+
+; int fread(void* ptr, unsigned int size, unsigned int nmemb, int fd)
+fread:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 16 ; Command fread
+    push dword[ebp+20] ; Variable nmemb
+    push dword[ebp+16] ; Variable nmemb
+    push dword[ebp+12] ; Variable size
+    push dword[ebp+8] ; Variable ptr
+    int 0x80
+    add esp, 16
+
+    pop ebp
+    ret
+
+; int fwrite(void* ptr, unsigned int size, unsigned int nmemb, int fd)
+fwrite:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 17 ; Command fwrite
+    push dword[ebp+20] ; Variable nmemb
+    push dword[ebp+16] ; Variable nmemb
+    push dword[ebp+12] ; Variable size
+    push dword[ebp+8] ; Variable ptr
+    int 0x80
+    add esp, 16
+
+    pop ebp
+    ret
+
+; int fstat(int fd, struct file_stat* stat)
+fstat:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 18 ; Command fstat
+    push dword[ebp+12] ; Variable stat
+    push dword[ebp+8] ; Variable fd
+    int 0x80
+    add esp, 8
+
+    pop ebp
+    ret
+
+; int fclose(int fd)
+fclose:
+    push ebp
+    mov ebp, esp
+
+    mov eax, 19 ; Command fclose
+    push dword[ebp+8] ; Variable fd
+    int 0x80
+    add esp, 4
 
     pop ebp
     ret

@@ -28,6 +28,7 @@ all: ./bin/boot.bin ./bin/loader.bin
 	cp ../kernel/bin/kernel.bin /Volumes/OCULAR\ BOOT/
 	cp ../kfont.psf /Volumes/OCULAR\ BOOT/
 	cp ../debug.txt /Volumes/OCULAR\ BOOT/
+	cp ../img.ppm /Volumes/OCULAR\ BOOT/
 	mkdir /Volumes/OCULAR\ BOOT/bin
 	mkdir /Volumes/OCULAR\ BOOT/usr
 	mkdir /Volumes/OCULAR\ BOOT/usr/bin
@@ -39,6 +40,7 @@ all: ./bin/boot.bin ./bin/loader.bin
 	cp ../programs/calculator/calc /Volumes/OCULAR\ BOOT/usr/bin
 	cp ../programs/neofetch/neofetch /Volumes/OCULAR\ BOOT/usr/bin
 	cp ../programs/shell/shell.elf /Volumes/OCULAR\ BOOT/bin
+	cp ../programs/window_manager/ocwm.elf /Volumes/OCULAR\ BOOT/bin
 	# End of copying files
 	diskutil umount /dev/disk2
 	sudo sh ./copy_data.sh 1

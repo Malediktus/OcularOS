@@ -4,6 +4,8 @@ FILES = ./build/kernel.asm.o \
 		./build/syscall/misc.o \
 		./build/syscall/io.o \
 		./build/syscall/heap.o \
+		./build/syscall/graphics.o \
+		./build/syscall/file.o \
 		./build/driver/disk/disk.o \
 		./build/driver/disk/streamer.o \
 		./build/task/process.o \
@@ -62,6 +64,7 @@ user_programs:
 	cd ../programs/blank && $(MAKE) all
 	cd ../programs/calculator && $(MAKE) all
 	cd ../programs/neofetch && $(MAKE) all
+	cd ../programs/window_manager && $(MAKE) all
 
 user_programs_clean:
 	cd ../programs/stdlib && $(MAKE) clean
@@ -69,6 +72,7 @@ user_programs_clean:
 	cd ../programs/blank && $(MAKE) clean
 	cd ../programs/calculator && $(MAKE) clean
 	cd ../programs/neofetch && $(MAKE) clean
+	cd ../programs/window_manager && $(MAKE) clean
 
 bootloader:
 	cd ../bootloader && $(MAKE) all

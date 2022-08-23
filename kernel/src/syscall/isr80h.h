@@ -5,6 +5,8 @@
 #include <syscall/misc.h>
 #include <syscall/io.h>
 #include <syscall/heap.h>
+#include <syscall/graphics.h>
+#include <syscall/file.h>
 
 enum SystemCommands
 {
@@ -21,6 +23,13 @@ enum SystemCommands
     SYSTEM_COMMAND10_FREE_ALL,
     SYSTEM_COMMAND11_GET_ENVIRON_VAR,
     SYSTEM_COMMAND12_SET_ENVIRON_VAR,
+    SYSTEM_COMMAND13_PUT_PIXEL,
+    SYSTEM_COMMAND14_FOPEN,
+    SYSTEM_COMMAND15_FSEEK,
+    SYSTEM_COMMAND16_FREAD,
+    SYSTEM_COMMAND17_FWRITE,
+    SYSTEM_COMMAND18_FSTAT,
+    SYSTEM_COMMAND19_FCLOSE,
 };
 
 void isr80h_register_commands();

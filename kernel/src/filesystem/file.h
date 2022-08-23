@@ -80,8 +80,6 @@ struct file_descriptor
     struct disk* disk;
 };
 
-
-
 void fs_init();
 int fopen(const char* filename, const char* mode_str);
 int fseek(int fd, int offset, FILE_SEEK_MODE whence);
