@@ -3,9 +3,11 @@ A HobbyOS writen in C
 <h1>Its not unix or linux</h1>
 
 ## Includes
-- Own multitasking kernel with support for elf files
+- Own multitasking kernel with support for elf files and VESA vbe graphics
 - Custom bootloader with 2 stages, also written in c with support for fat16 filesystem
-- Custom shell
+- Custom interpreted shell
+- Neofetch program for version information
+- interpreted Calculator
 
 ## Screenshots
 <img src="screenshots/Bildschirmfoto 2022-08-16 um 12.41.56.png"/>
