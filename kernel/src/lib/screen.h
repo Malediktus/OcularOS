@@ -49,12 +49,18 @@ extern uint8_t bpp;
 extern uint32_t framebuffer;
 extern uint16_t width;
 extern uint16_t height;
+extern uint16_t terminal_row;
+extern uint16_t terminal_col;
 
 void putpixel(int x, int y, int color);
+void fillrect(int x, int y, int width, int height, int color);
 void terminal_initialize();
 void terminal_writechar(char c, int colour);
+void terminal_putchar(int xOff, int yOff, char c, int colour);
 void print(const char* str);
 void fillscreen(int color);
+void draw_subbuffer(int x, int y, int width, int height, int* buffer);
 void draw_icon(int x, int y, int w, int h, uint32_t* pixels);
+void swap_buffers();
 
 #endif

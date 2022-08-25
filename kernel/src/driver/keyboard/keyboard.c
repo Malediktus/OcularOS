@@ -58,10 +58,12 @@ keyboard_caps_lock_state keyboard_get_capslock(struct keyboard* keyboard)
 
 void keyboard_push(char c)
 {
-    struct process* process = process_current();
+    for (int i = 0; i < OCULAROS_MAX_PROCESSES; i++)
+    {
+    struct process* process = processes[i];
     if (!process)
     {
-        return;
+        continue;
     }
 
     if (c == 0)
@@ -70,6 +72,7 @@ void keyboard_push(char c)
     int real_index = keyboard_get_tail_index(process);
     process->keyboard.buffer[real_index] = c;
     process->keyboard.tail++;
+    }
 }
 
 char keyboard_pop()

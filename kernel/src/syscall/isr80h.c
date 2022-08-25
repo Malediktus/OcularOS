@@ -24,4 +24,7 @@ void isr80h_register_commands()
     isr80h_register_command(SYSTEM_COMMAND19_FCLOSE, isr80h_command19_fclose);
     isr80h_register_command(SYSTEM_COMMAND20_START_IPC, isr80h_command20_start_ipc);
     isr80h_register_command(SYSTEM_COMMAND21_POP_IPC, isr80h_command21_pop_ipc);
+    isr80h_register_command(SYSTEM_COMMAND22_FILLRECT, isr80h_command22_fillrect);
+    isr80h_register_command(SYSTEM_COMMAND23_SWAP_BUFFERS, isr80h_command23_swap_buffers);
+    isr80h_register_command(SYSTEM_COMMAND24_DRAW_SUBBUFFER, isr80h_command24_draw_subbuffer);
 }

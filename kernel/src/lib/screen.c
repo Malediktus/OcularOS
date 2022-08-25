@@ -6,6 +6,7 @@ uint16_t terminal_col = 0;
 uint16_t pitch = 0;
 uint8_t bpp = 0;
 uint32_t framebuffer = 0;
+uint32_t back_buffer = 0;
 struct psf1_font* terminal_font;
 uint16_t width = 0;
 uint16_t height = 0;
@@ -104,6 +105,7 @@ void terminal_initialize()
     framebuffer = graphics_info->framebuffer;
     width = graphics_info->width;
     height = graphics_info->height;
+    back_buffer = (uint32_t)kzalloc(width * height * (bpp/8));
     video_mem = (uint16_t*)(0xB8000);
     terminal_row = 0;
     terminal_col = 0;
@@ -121,7 +123,33 @@ void print(const char* str)
 
 void putpixel(int x, int y, int color)
 {
-    *((uint32_t*)(y * pitch + (x * (bpp/8)) + framebuffer)) = color;
+    *((uint32_t*)(y * pitch + (x * (bpp/8)) + back_buffer)) = color;
+}
+
+void fillrect(int x, int y, int width, int height, int color)
+{
+    for (int i = y; i < y+height; i++) {
+        for (int j = x; j < x+width; j++) {
+            *((uint32_t*)(i * pitch + (j * (bpp/8)) + back_buffer)) = color;
+        } // TODO: Dont calculate ptr all the time
+    }
+}
+
+void draw_subbuffer(int pos_x, int pos_y, int width, int height, int* buffer)
+{
+    int l = 0;
+    for (int y = pos_y; y < pos_y+height; y++)
+    {
+        for (int x = pos_x; x < pos_x+width; x++)
+        {
+            int alpha = (buffer[l] >> (8*3)) & 0xff;
+            if (alpha > 0x00)
+            {
+                *((uint32_t*)(y * pitch + (x * (bpp/8)) + back_buffer)) = buffer[l];
+            }
+            l++;
+        }
+    } // TODO: Dont calculate ptr all the time
 }
 
 void fillscreen(int color)
@@ -144,4 +172,11 @@ void draw_icon(int x, int y, int w, int h, uint32_t* pixels) {
             putpixel(x + i, y + l, pixels[j]);
         }
     }
+}
+
+void swap_buffers()
+{
+    terminal_row = 0;
+    terminal_col = 0;
+    memcpy((uint32_t*)framebuffer, (uint32_t*)back_buffer, width * height * (bpp/8));
 }

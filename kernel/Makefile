@@ -30,7 +30,8 @@ FILES = ./build/kernel.asm.o \
 		./build/memory/paging.o \
 		./build/memory/paging.asm.o \
 		./build/driver/keyboard/keyboard.o \
-		./build/driver/keyboard/classic.o
+		./build/driver/keyboard/classic.o  \
+		./build/driver/mouse/mouse.o
 
 INCLUDES = -I./src
 FLAGS = -g -ffreestanding -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
@@ -53,26 +54,32 @@ all: ./bin/kernel.bin user_programs bootloader
 	echo "\n"
 
 run: all
-	qemu-system-i386 -hda bin/os.bin
+	qemu-system-i386 -smp 2 -vga vmware -m 256M -hda bin/os.bin
 
 run-build:
-	qemu-system-i386 -hda bin/os.bin
+	qemu-system-i386 -smp 2 -vga vmware -m 256M -hda bin/os.bin
 
 user_programs:
 	cd ../programs/stdlib && $(MAKE) all
+	cd ../programs/ui_framework && $(MAKE) all
 	cd ../programs/shell && $(MAKE) all
 	cd ../programs/blank && $(MAKE) all
 	cd ../programs/calculator && $(MAKE) all
 	cd ../programs/neofetch && $(MAKE) all
 	cd ../programs/window_manager && $(MAKE) all
+	cd ../programs/dock && $(MAKE) all
+	cd ../programs/terminal && $(MAKE) all
 
 user_programs_clean:
 	cd ../programs/stdlib && $(MAKE) clean
 	cd ../programs/shell && $(MAKE) clean
+	cd ../programs/ui_framework && $(MAKE) clean
 	cd ../programs/blank && $(MAKE) clean
 	cd ../programs/calculator && $(MAKE) clean
 	cd ../programs/neofetch && $(MAKE) clean
 	cd ../programs/window_manager && $(MAKE) clean
+	cd ../programs/dock && $(MAKE) clean
+	cd ../programs/terminal && $(MAKE) clean
 
 bootloader:
 	cd ../bootloader && $(MAKE) all

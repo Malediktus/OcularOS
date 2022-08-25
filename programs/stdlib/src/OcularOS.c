@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-int ocularos_getkey();
 void ocularos_putchar(char c);
 
 int ocularos_getkeyblock()
@@ -11,6 +10,7 @@ int ocularos_getkeyblock()
     do
     {
         val = ocularos_getkey();
+        asm("int $0x80" : : "a" (23));
     }
     while (val == 0);
     return val;

@@ -37,7 +37,11 @@ struct RTResult run(char* fn, char* text)
 int main(int argc, char** argv)
 {
     // TODO: allow arguments to use quotes
-    print("OcularOS v1.0.0\n");
+    char* terminal_ipc = ocularos_start_ipc("term.elf", SHELL_MAX_INPUT_SIZE+(1080/8)*(768/8));
+    if (terminal_ipc == 0)
+        print("OcularOS v1.0.0\n");
+    else
+        strcpy(terminal_ipc, "OcularOS v1.0.0\n");
     while (1)
     {
         print("> ");
@@ -70,6 +74,7 @@ int main(int argc, char** argv)
                 printf("%s\n", number_as_string(result.value));
         }
         ocularos_free_all();
+        asm("int $0x80" : : "a" (23));
     }
 
     return 0;

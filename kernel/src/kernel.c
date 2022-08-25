@@ -125,19 +125,19 @@ void kernel_main()
     isr80h_register_commands();
 
     keyboard_init();
+    mouse_init(); // Not yet working
 
     print("Initialization finished!\n");
 
     struct process* process2 = 0;
-    int res = process_load_switch("0:/usr/bin/blank.elf", &process2);
+    int res = process_load_switch("0:/bin/ocwm.elf", &process2);
     if (res != OCULAROS_ALL_OK)
     {
-        panic("Failed to load /usr/bin/blank.elf\n");
+        panic("Failed to load /bin/ocwm.elf\n");
     }
 
     task_run_first_ever_task();
 
     print("Landed at end of kernel\n");
-
     while(1);
 }

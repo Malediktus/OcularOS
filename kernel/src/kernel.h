@@ -16,6 +16,7 @@
 #include <filesystem/pparser.h>
 #include <driver/disk/disk.h>
 #include <driver/keyboard/keyboard.h>
+#include <driver/mouse/mouse.h>
 #include <driver/disk/streamer.h>
 #include <config.h>
 #include <types.h>

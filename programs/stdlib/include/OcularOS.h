@@ -10,6 +10,7 @@ struct command_argument
 };
 
 void print(const char* message);
+int ocularos_getkey();
 int ocularos_getkeyblock();
 void ocularos_readline(char* out, int max, bool output_while_typing);
 void ocularos_process_load(const char* filename);

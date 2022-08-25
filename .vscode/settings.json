@@ -15,6 +15,10 @@
         "parser.h": "c",
         "sysfunction.h": "c",
         "file.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "mouse.h": "c",
+        "port.h": "c",
+        "graphics.h": "c",
+        "windowapi.h": "c"
     }
 }

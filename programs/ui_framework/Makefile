@@ -1,9 +1,9 @@
-FILES=./build/start.asm.o ./build/ocularos.asm.o ./build/stdlib.o ./build/stdio.o ./build/string.o ./build/memory.o ./build/OcularOS.o ./build/start.o ./build/WindowAPI.o
-INCLUDES=-I./include
+FILES=./build/core.o
+INCLUDES=-I./include -I../stdlib/include
 FLAGS = -g -falign-jumps -falign-functions -falign-labels -falign-loops -fstrength-reduce -fomit-frame-pointer -finline-functions -Wno-unused-function -fno-builtin -Werror -Wno-unused-label -Wno-cpp -Wno-unused-parameter -nostdlib -nostartfiles -nodefaultlibs -Wall -O0 -Iinc
 
 all: $(FILES)
-	i686-elf-ld -m elf_i386 -relocatable $(FILES) -o stdlib.elf
+	i686-elf-ld -m elf_i386 -relocatable $(FILES) -o ui_framework.elf
 
 build/%.asm.o: src/%.asm
 	nasm -f elf $^ -o $@
@@ -13,4 +13,4 @@ build/%.o: src/%.c
 
 clean:
 	rm $(FILES)
-	rm ./stdlib.elf
+	rm ./ui_framework.elf
